@@ -1,0 +1,43 @@
+--- edit-alias.php.orig	2014-03-25 12:05:50.000000000 +0400
++++ edit-alias.php	2014-03-28 23:44:08.000000000 +0400
+@@ -34,7 +34,7 @@
+ authentication_require_role('admin');
+ $SESSID_USERNAME = authentication_get_username();
+ 
+-if($CONF['alias_control_admin'] == 'NO' && !authentication_has_role('global-admin')) {
++if($CONF['alias_control_admin'] == 'NO' && !authentication_has_role('global-admin') && $CONF['alias_control_admin_edit'] == 'NO') {
+     die("Check config.inc.php - domain administrators do not have the ability to edit user's aliases (alias_control_admin)");
+ }
+ 
+@@ -46,6 +46,17 @@
+     die("Required parameters not present");
+ }
+ 
++if($CONF['alias_control_admin'] == 'NO' && !authentication_has_role('global-admin') && $CONF['alias_control_admin_edit'] == 'YES') 
++{
++    $result = db_query ("SELECT * FROM $table_mailbox WHERE username='$fAddress' AND domain='$fDomain'");
++    if ($result['rows'] == 1)
++    {
++        die("You lack permission to do this. yes.");
++    }
++}
++
+ /* Check the user is able to edit the domain's aliases */
+ if(!check_owner($SESSID_USERNAME, $fDomain) && !authentication_has_role('global-admin'))
+ {
+@@ -143,6 +154,17 @@
+             }
+         }
+     }
++    if($CONF['alias_control_admin'] == 'NO' && !authentication_has_role('global-admin') && $CONF['alias_control_admin_edit'] == 'YES') 
++    {
++        $result = db_query ("SELECT * FROM $table_mailbox WHERE username='$fAddress' AND domain='$fDomain'");
++        if ($result['rows'] == 1)
++        {
++            die("You lack permission to do this. yes.");
++        }
++    }
++
+     // duplicates suck, mmkay..
+     $new_aliases = array_unique($new_aliases);
+ 
