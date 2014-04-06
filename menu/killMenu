@@ -1,6 +1,0 @@
-#!/bin/bash
-# add to corntab
-# */5 * * * * /usr/local/bin/killMenu
-if [ -n "$(ps aux|grep '^menu.*[d]ialog')" -a -z "$(w|grep menu)" ]; then
-        killall dialog
-fi
