@@ -1,0 +1,5 @@
+#!/bin/bash
+# useradd poweroff -s /var/lib/poweroff/bin/shut -d /var/lib/poweroff
+# Add to sudo:
+# poweroff  ALL=(ALL)  NOPASSWD: /sbin/shutdown -h now
+sudo /sbin/shutdown -h now && exit

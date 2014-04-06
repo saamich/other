@@ -1,0 +1,15 @@
+FROM=$(hostname -s)
+NOT_IP=""
+message()
+{
+        echo "MIME-Version: 1.0"
+        echo "Content-Type: text/plain; charset=utf-8"
+        echo "Content-Transfer-Encoding: 16bit"
+        echo "From: $FROM"
+        echo "To: root"
+        echo "Subject: `echo $SSH_CONNECTION $SSH_TTY | sed "s/\(.*\) \(.*\) \(.*\) \(.*\) \(.*\)/SSH user [$USER] connection at \5 from [\1]/"`"
+        echo $SSH_CONNECTION $SSH_TTY | sed "s/\(.*\) \(.*\) \(.*\) \(.*\) \(.*\)/SSH user [$USER] connection at \5 from [\1]/"
+        LANG=ru_RU.UTF-8 date +'%e %B %Y, %k:%M'
+}
+
+[ "`echo $SSH_CONNECTION|cut -d' ' -f1`" != "$NOT_IP" ] &&  message | /usr/sbin/sendmail -f logs@autoliga.ru root

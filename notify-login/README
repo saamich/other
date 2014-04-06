@@ -1,0 +1,13 @@
+Original link:
+http://blog.stalkr.net/2010/11/login-notifications-pamexec-scripting.html
+This is not Gpl code!
+
+For centos add:
+session     optional     pam_exec.so /usr/local/bin/notify-login
+to:
+/etc/pam.d/password-auth
+/etc/pam.d/system-auth
+
+If you use authconfig, this changes will be destroyed the next time authconfig is run
+
+Or use /etc/ssh/sshrc!

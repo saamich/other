@@ -1,0 +1,17 @@
+#!/bin/sh
+[ "$PAM_TYPE" = "open_session" -a $PAM_SERVICE != "crond" ] || exit 0
+{
+  echo "MIME-Version: 1.0"
+  echo "Content-Type: text/plain; charset=utf-8"
+  echo "Content-Transfer-Encoding: 16bit"
+  echo "Subject: $PAM_SERVICE login: $PAM_USER $( [ $PAM_SERVICE = "sshd" ] && echo "from $PAM_RHOST" || echo "TTY: $PAM_TTY" )"
+  echo "From: login@$(hostname -s).local"
+  echo "To: root"
+  echo
+  echo "User: $PAM_USER"
+  echo "Rhost: $PAM_RHOST"
+  echo "Service: $PAM_SERVICE"
+  echo "TTY: $PAM_TTY"
+  echo "Date: $(LANG=ru_RU.UTF-8 date +'%e %B %Y, %k:%M')"
+  echo "Server: `uname -a`"
+} |  /usr/sbin/sendmail -f logs@autoliga.ru root
