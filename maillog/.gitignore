@@ -1,0 +1,7 @@
+*.class
+src/org/maillog/ReadFile.java
+# Package Files #
+bin/*.jar
+*.war
+*.ear
+

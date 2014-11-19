@@ -1,0 +1,2 @@
+cluster.name: "logs"
+node.name: "Logs client"
