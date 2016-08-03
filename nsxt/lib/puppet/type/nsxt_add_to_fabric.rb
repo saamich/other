@@ -2,16 +2,18 @@ Puppet::Type.newtype(:nsxt_add_to_fabric) do
 
   @doc = "Add kvm node to NSX-T fabric."
 
-  ensurable do
-    defaultto :present
-    newvalue(:present) do
-      provider.create
-    end
-  end
+  ensurable
 
-  newparam(:manager) do
+  newparam(:managers) do
     isnamevar
-    desc 'The address of NSX-T manager.'
+    desc 'IP address of one or more NSX-T managers separated by commas.'
+    munge do |value|
+      array = []
+      value.split(',').each do |manager|
+        array.push(manager.to_s.strip)
+      end
+      value = array
+    end
   end
 
   newparam(:username) do
@@ -22,8 +24,9 @@ Puppet::Type.newtype(:nsxt_add_to_fabric) do
     desc 'The password for login to NSX-T manager.'
   end
 
-  newparam(:thumbprint) do
-    desc 'Thumbprint of the NSX-T manager.'
+  newparam(:ca_file) do
+    desc 'CA certificate to verify NSX-T manager certificate'
+    defaultto ''
   end
 
 end
