@@ -1,6 +1,6 @@
-Puppet::Type.newtype(:nsxt_add_to_fabric) do
+Puppet::Type.newtype(:nsxt_create_transport_node) do
 
-  @doc = "Add kvm node to NSX-T fabric."
+  @doc = "Create from kvm node NSX-T transport node."
 
   ensurable
 
@@ -31,6 +31,31 @@ Puppet::Type.newtype(:nsxt_add_to_fabric) do
 
   newparam(:ca_file) do
     desc 'CA certificate to verify NSX-T manager certificate.'
+    defaultto ''
+  end
+
+  newparam(:host_switch_name) do
+    desc 'HostSwitch name. Should coincide with host switch name in transport zone.'
+  end
+
+  newparam(:host_switch_profile_ids, :array_matching => :all) do
+    desc 'Ids of HostSwitch profiles to be associated with this HostSwitch.'
+  end
+
+  newparam(:pnics, :array_matching => :all) do
+    desc 'Array of "device_name : uplink_name" pairs.'
+  end
+
+  newparam(:static_ip_pool_id) do
+    desc 'ID of already configured Static IP Pool.'
+  end
+
+  newparam(:transport_zone_id) do
+    desc 'Transport zone ID.'
+  end
+
+  newparam(:transport_zone_profile_ids, :array_matching => :all) do
+    desc 'Array of TransportZoneProfileTypeIdEntry .'
     defaultto ''
   end
 
