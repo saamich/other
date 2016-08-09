@@ -1,4 +1,4 @@
-nsxt_add_to_fabric { 'Add transport node':
+nsxt_add_to_fabric { 'Register node on MP':
   managers => 'https://172.16.0.245, https://172.16.0.249:443',
   username => 'admin',
   password => 'Qwer!1234',

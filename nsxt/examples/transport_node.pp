@@ -1,4 +1,4 @@
-nsxt_create_transport_node { 'Register node':
+nsxt_create_transport_node { 'Add transport node':
   managers => 'https://172.16.0.245, https://172.16.0.249:443',
   username => 'admin',
   password => 'Qwer!1234',
